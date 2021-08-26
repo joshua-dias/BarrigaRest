@@ -7,7 +7,6 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -125,6 +124,40 @@ public class BarrigaTest extends BaseTest {
                         .body("$", hasSize(1))
                         .body("msg", hasItem("Data da Movimentação deve ser menor ou igual à data atual"));
     }
+    @Test
+    public void naoDeveRemoverContaComMovimentacao(){
+                given()
+                        .header("Authorization", "JWT " + TOKEN)
+                .when()
+                        .delete("/contas/763632")
+                .then()
+                        .statusCode(500)
+                        .body("constraint", is("transacoes_conta_id_foreign"))
+                ;
+    }
+    @Test
+    public void deveCalcularSaldo(){
+                 given()
+                        .header("Authorization", "JWT " + TOKEN)
+                .when()
+                        .get("/saldo")
+                .then()
+                        .statusCode(200)
+                        .body("find{it.conta_id == 763632}.saldo", is("100.00"))
+        ;
+    }
+    @Test
+    public void removerMovimentacao(){
+                given()
+                        .header("Authorization", "JWT " + TOKEN)
+                .when()
+                        .delete("/transacoes/709512")
+                .then()
+                        .statusCode(204)
+        ;
+    }
+
+    //709512
     private Movimentacoes getMovimentacaoValida(){
         Movimentacoes mov = new Movimentacoes();
         mov.setConta_id(763632);
