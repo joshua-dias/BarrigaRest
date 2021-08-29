@@ -1,16 +1,14 @@
 package barrigarest.tests;
 
 import barrigarest.core.BaseTest;
-import barrigarest.tests.utils.DataUtils;
+import utils.DataUtils;
 import io.restassured.RestAssured;
 import io.restassured.specification.FilterableRequestSpecification;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package barrigarest.tests.utils;
+package utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
